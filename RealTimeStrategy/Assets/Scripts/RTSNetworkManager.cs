@@ -5,14 +5,14 @@ using Mirror;
 
 public class RTSNetworkManager : NetworkManager
 {
-    [SerializeField] GameObject unitSpawnPrefab;
+    [SerializeField] GameObject unitSpawnerPrefab;
 
     public override void OnServerAddPlayer(NetworkConnectionToClient conn)
     {
         base.OnServerAddPlayer(conn);
 
         GameObject unitSpawnerInstance =  Instantiate(
-        unitSpawnPrefab,
+        unitSpawnerPrefab,
         conn.identity.transform.position,
         conn.identity.transform.rotation);
 

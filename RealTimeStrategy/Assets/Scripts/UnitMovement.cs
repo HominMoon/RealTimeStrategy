@@ -9,12 +9,10 @@ public class UnitMovement : NetworkBehaviour
 {
     [SerializeField] NavMeshAgent navMeshAgent;
 
-    Camera mainCamera;
-
     #region Server
 
     [Command]
-    void CMDMove(Vector3 position)
+    public void CMDMove(Vector3 position)
     {
         // position 값을 navMesh 상에서 찾지 못했을 경우 return
         // SamplePosition은 현재 오브젝트의 위치에서 가장 가까운 점을 찾아준다.
@@ -27,25 +25,6 @@ public class UnitMovement : NetworkBehaviour
 
 
     #region Client
-
-    public override void OnStartAuthority()
-    {
-        mainCamera = Camera.main;
-    }
-
-    [ClientCallback]
-    void Update()
-    {
-        if (!hasAuthority) { return; }
-
-        if (!Mouse.current.rightButton.wasPressedThisFrame) { return; }
-
-        Ray ray = mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
-
-        if (!Physics.Raycast(ray, out RaycastHit hitInfo, Mathf.Infinity)) { return; }
-
-        CMDMove(hitInfo.point);
-    }
 
     #endregion
 
